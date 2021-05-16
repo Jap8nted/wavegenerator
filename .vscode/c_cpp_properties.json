@@ -1,0 +1,36 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64"
+        },
+        {
+            "name": "Arduino",
+            "includePath": [
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/arduino/avr/cores/arduino/",
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/arduino/avr/libraries/EEPROM/",
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/arduino/avr/libraries/SPI/",
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/arduino/avr/libraries/SoftwareSerial/",
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/arduino/avr/libraries/Wire/",
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/tools/avr/avr/include/",
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/tools/avr/avr/include/avr/",
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/tools/avr/avr/include/compat/",
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/tools/avr/avr/include/util/",
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/tools/avr/lib/gcc/avr/4.*.*/include/",
+                "/home/stefania/Downloads/arduino-1.8.13/hardware/tools/avr/lib/gcc/avr/4.*.*/include-fixed/"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 4
+}
