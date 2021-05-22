@@ -12,6 +12,9 @@
 
 Adafruit_ADS1015 ads;
 
+TaskHandle_t SendDataToMqttBrokerTask;
+TaskHandle_t SampleDataFromADCTask;
+
 int LED_BUILTIN = 2;
 const uint8_t IO32 = 32;
 const uint8_t IO33 = 33;
