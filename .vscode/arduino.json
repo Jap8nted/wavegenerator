@@ -1,5 +1,6 @@
 {
-    "port": "/dev/ttyACM0",
-    "sketch": "wavegenerator.ino",
-    "board": "arduino:sam:arduino_due_x_dbg"
+    "port": "/dev/ttyUSB0",
+    "sketch": "esp32/adc_sampling/adc_sampling.ino",
+    "board": "esp32:esp32:esp32",
+    "configuration": "PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,DebugLevel=none"
 }
