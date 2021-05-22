@@ -1,3 +1,12 @@
+/*************************
+ * 
+ * Authors: 
+ *      Jonatan Aponte
+ *      Santiago Aponte
+ * 
+ * IoT AC Current and Voltage measurement real time measurement and transmission to remote 
+ * broker
+ * ***********************/
 
 #include <Adafruit_ADS1X15.h>
 
@@ -78,32 +87,21 @@ void SendDataToMqttBrokerTask(void *pvParameters)
     }
 }
 
-void loop(void)
+//Function which executes the task
+//
+void SampleDataFromADCTask(void *pvParameters)
 {
-    int16_t adc0;
-    float volts0;
-
-    digitalWrite(IO32, led_value);
-
-    adc0 = ads.readADC_SingleEnded(0);
-    volts0 = (adc0 * 0.1875) / 1000;
-    if (led_value == HIGH)
+    Serial.print("Task running on CPU ");
+    Serial.print(xPortGetCoreID());
+    for (;;)
     {
-        led_value = LOW;
+        digitalWrite(IO32, HIGH);
+        delay(700);
+        digitalWrite(IO32, LOW);
+        delay(700);
     }
-    else
-    {
-        led_value = HIGH;
-    }
-
-    adc1 = ads.readADC_SingleEnded(1);
-    volts1 = (adc1 * 0.1875) / 1000;
-    if (led_value == HIGH)
-    {
-        led_value = LOW;
-    }
-    else
-    {
-        led_value = HIGH;
-    }
+}
+// Empty because tasks are defined
+void loop()
+{
 }
