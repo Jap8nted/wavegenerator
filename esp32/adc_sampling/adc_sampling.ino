@@ -23,31 +23,6 @@ void setup(void)
      * Task for sending data somewhere
      * 
     **/
-    xTaskCreatePinnedToCore(
-        SendDataToMqttBrokerTask,     /* Task function */
-        "SendDataToMqttBroker",       /* name of the task */
-        10000,                        /* Stack size (Bytes) */
-        NULL,                         /* Parameters of tasks */
-        1,                            /* Priority of the task */
-        &SendDataToMqttBrokerHandler, /* Task handler */
-        0                             /* Core where the task is going to run */
-    );
-
-    delay(500);
-
-    /**
-     * Task which samples the data from the ADC
-     * */
-
-    xTaskCreatePinnedToCore(
-        SampleDataFromADCTask,         /* Task function */
-        "SampleDataFromADC",           /* name of the task */
-        10000,                         /* Stack size (Bytes) */
-        NULL,                          /* Parameters of tasks */
-        1,                             /* Priority of the task */
-        &SampleDataFromADCTaskHandler, /* Task handler */
-        1                              /* Core where the task is going to run */
-    );
 
     delay(500);
     /**
@@ -61,21 +36,6 @@ void setup(void)
      * */
     pinMode(IO32, OUTPUT);
     pinMode(IO33, OUTPUT);
-}
-
-//Function which executes the task
-//
-void SendDataToMqttBrokerTask(void *pvParameters)
-{
-    Serial.print("Task running on CPU ");
-    Serial.print(xPortGetCoreID());
-    for (;;)
-    {
-        digitalWrite(IO32, HIGH);
-        delay(1000);
-        digitalWrite(IO32, LOW);
-        delay(1000);
-    }
 }
 
 void loop(void)
