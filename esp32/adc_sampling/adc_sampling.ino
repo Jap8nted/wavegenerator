@@ -12,10 +12,12 @@
 
 Adafruit_ADS1015 ads;
 
-TaskHandle_t SendDataToMqttBrokerTask;
-TaskHandle_t SampleDataFromADCTask;
+TaskHandle_t SampleDataFromADCTaskHandler;
+TaskHandle_t SendDataToMqttBrokerHandler;
 
-int LED_BUILTIN = 2;
+int LED_1 = 2;
+int LED_2 = 4;
+
 const uint8_t IO32 = 32;
 const uint8_t IO33 = 33;
 bool led_value;
@@ -38,7 +40,7 @@ void setup(void)
     xTaskCreatePinnedToCore(
         SendDataToMqttBrokerTask,     /* Task function */
         "SendDataToMqttBroker",       /* name of the task */
-        10000,                        /* Stack size (Bytes) */
+        1000,                         /* Stack size (Bytes) */
         NULL,                         /* Parameters of tasks */
         1,                            /* Priority of the task */
         &SendDataToMqttBrokerHandler, /* Task handler */
@@ -54,7 +56,7 @@ void setup(void)
     xTaskCreatePinnedToCore(
         SampleDataFromADCTask,         /* Task function */
         "SampleDataFromADC",           /* name of the task */
-        10000,                         /* Stack size (Bytes) */
+        1000,                          /* Stack size (Bytes) */
         NULL,                          /* Parameters of tasks */
         1,                             /* Priority of the task */
         &SampleDataFromADCTaskHandler, /* Task handler */
@@ -73,6 +75,8 @@ void setup(void)
      * */
     pinMode(IO32, OUTPUT);
     pinMode(IO33, OUTPUT);
+    pinMode(LED_1, OUTPUT);
+    pinMode(LED_2, OUTPUT);
 }
 
 //Function which executes the task
@@ -80,12 +84,14 @@ void setup(void)
 void SendDataToMqttBrokerTask(void *pvParameters)
 {
     Serial.print("Task running on CPU ");
-    Serial.print(xPortGetCoreID());
+    Serial.println(xPortGetCoreID());
     for (;;)
     {
-        digitalWrite(IO32, HIGH);
+        digitalWrite(IO33, HIGH);
+        digitalWrite(LED_1, HIGH);
         delay(1000);
-        digitalWrite(IO32, LOW);
+        digitalWrite(IO33, LOW);
+        digitalWrite(LED_1, LOW);
         delay(1000);
     }
 }
@@ -95,12 +101,14 @@ void SendDataToMqttBrokerTask(void *pvParameters)
 void SampleDataFromADCTask(void *pvParameters)
 {
     Serial.print("Task running on CPU ");
-    Serial.print(xPortGetCoreID());
+    Serial.println(xPortGetCoreID());
     for (;;)
     {
         digitalWrite(IO32, HIGH);
+        digitalWrite(LED_2, LOW);
         delay(700);
         digitalWrite(IO32, LOW);
+        digitalWrite(LED_2, LOW);
         delay(700);
     }
 }
