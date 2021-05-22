@@ -9,6 +9,7 @@
  * ***********************/
 
 #include <Adafruit_ADS1X15.h>
+#include "config.h"
 
 Adafruit_ADS1015 ads;
 
@@ -21,6 +22,14 @@ int LED_2 = 4;
 const uint8_t IO32 = 32;
 const uint8_t IO33 = 33;
 bool led_value;
+
+// ARray which contains all the measurements
+volatile uint16_t currentMeasurements[1000];
+volatile uint16_t voltageMeasurements[1000];
+volatile bool sampleFinished;
+
+volatile uint16_t voltageMeasurement = 0x0;
+volatile uint16_t currentMeasurement = 0x0;
 
 void setup(void)
 {
@@ -44,7 +53,7 @@ void setup(void)
         NULL,                         /* Parameters of tasks */
         1,                            /* Priority of the task */
         &SendDataToMqttBrokerHandler, /* Task handler */
-        0                             /* Core where the task is going to run */
+        ESP32_CORE_0                  /* Core where the task is going to run */
     );
 
     delay(500);
@@ -60,7 +69,7 @@ void setup(void)
         NULL,                          /* Parameters of tasks */
         1,                             /* Priority of the task */
         &SampleDataFromADCTaskHandler, /* Task handler */
-        1                              /* Core where the task is going to run */
+        ESP32_CORE_1                   /* Core where the task is going to run */
     );
 
     delay(500);
