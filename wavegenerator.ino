@@ -22,9 +22,11 @@ void setup()
 
 void loop()
 {
-    analogWrite(DAC0, (uint16_t)waveformsTable[0][i]);
-    analogWrite(DAC1, (uint16_t)waveformsTable[0][i]);
-    Serial.println((uint16_t)waveformsTable[0][i]);
+    analogWrite(DAC0, waveformsTable[0][i]);
+    // Stablish a delay of 5 ms + analogwrite execution time between both signals
+    delay(5);
+    analogWrite(DAC1, waveformsTable[0][i]);
+    
     i++;
     if (i == maxSamplesNum)
     {
