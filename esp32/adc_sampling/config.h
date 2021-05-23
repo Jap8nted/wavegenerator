@@ -10,8 +10,8 @@
 /**
  *  Wifi credentials
  */
-#define WIFI_NETWORK_SSID "FRITZ!Box 7530 SZ"
-#define WIFI_PASSWORD "11177884483475312780"
+#define WIFI_NETWORK_SSID ""
+#define WIFI_PASSWORD ""
 
 /**
  *  MQTT 

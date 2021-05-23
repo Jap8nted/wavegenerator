@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 from influxdb import InfluxDBClient
-from pydantic install BaseModel, ValidationError
+from pydantic import BaseModel, ValidationError
 from typing import Dict, List, Optional
 import json
 import pprint
@@ -16,7 +16,7 @@ MQTT_CLIENT_ID = "power_meter"
 class EnergyMeterStationData(BaseModel):
     current: List[int]
     voltage: List[int]
-    sendor_id: int
+    sensor_id: int
     sensor_phase: int
 
 
@@ -30,9 +30,11 @@ def _parse_mqtt_payload(payload):
 
 def on_message(client, userdata, msg):
     print(f"{msg.topic} {msg.payload}")
-    data = _parse_mqtt_message(msg.topic, msg.payload)
-    if data:
-        pprint.pprint(data)
+    #data = _parse_mqtt_message(msg.topic, msg.payload)
+    data = str(msg.payload.decode("utf-8", "ignore"))
+    print(data)
+    # if data:
+    #    pprint.pprint(data)
 
 
 def _parse_mqtt_message(topic, payload):

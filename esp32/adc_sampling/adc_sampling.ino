@@ -129,6 +129,16 @@ void SendDataToMqttBrokerTask(void *pvParameters)
     Serial.println(xPortGetCoreID());
     for (;;)
     {
+        if (status == HIGH)
+        {
+            status = LOW;
+        }
+        else if (status == LOW)
+        {
+            status = HIGH;
+        }
+        //digitalWrite(IO33, status);
+        //digitalWrite(LED_1, status);
         StaticJsonDocument<512> mqttMessageDocument;
         mqttMessageDocument["sensor_id"] = SENSOR_ID;
         mqttMessageDocument["sensor_phase"] = SENSOR_PHASE;
@@ -142,9 +152,9 @@ void SendDataToMqttBrokerTask(void *pvParameters)
             current.add(currentMeasurements[i]);
         }
 
-                String json_string;
+        String json_string;
         serializeJson(mqttMessageDocument, json_string);
-        if (mqttClient.publish(TOPIC, json_string.c_str()))
+        if (true) //mqttClient.publish(TOPIC, json_string.c_str()))
         {
             Serial.println("Message Sent to Server");
         }
@@ -152,12 +162,13 @@ void SendDataToMqttBrokerTask(void *pvParameters)
         {
             Serial.println("Fail, traing to reconnect to MQTT Broker");
 
-            connectToMqtt();
+            //connectToMqtt();
             //TODO : Wrong it should check and try to reconnect or skipp but not write until is connected
-            delay(10);
-            mqttClient.publish(TOPIC, json_string.c_str());
+            //delay(10);
+            //mqttClient.publish(TOPIC, json_string.c_str());
         }
         Serial.println();
+        delay(1000);
     }
 }
 
@@ -188,10 +199,11 @@ void loop()
     // Sample 1024 times
     digitalWrite(IO32, HIGH);
     voltageMeasurement = ads.readADC_SingleEnded(0);
-
+    mqttClient.publish(TOPIC, String(voltageMeasurement).c_str());
     voltageMeasurements[counter] = voltageMeasurement;
     digitalWrite(IO32, LOW);
     currentMeasurement = ads.readADC_SingleEnded(1);
+    mqttClient.publish(TOPIC, String(voltageMeasurement).c_str());
 
     currentMeasurements[counter] = currentMeasurement;
 
